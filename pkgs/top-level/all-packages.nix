@@ -11848,6 +11848,10 @@ let
 
   evopedia = callPackage ../applications/misc/evopedia { };
 
+  hamster = callPackage ../applications/misc/hamster {
+    gconf = gnome.GConf;
+  };
+
   keepassx = callPackage ../applications/misc/keepassx { };
   keepassx2 = callPackage ../applications/misc/keepassx/2.0.nix { };
 
