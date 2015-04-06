@@ -11850,6 +11850,8 @@ let
 
   hamster = callPackage ../applications/misc/hamster {
     gconf = gnome.GConf;
+    inherit (gnome) gnome_python;
+    inherit (pythonPackages) pyxdg;
   };
 
   keepassx = callPackage ../applications/misc/keepassx { };
