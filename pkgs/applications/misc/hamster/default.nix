@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, gconf, gettext, gnome_python, gtk3, intltool, makeWrapper, pycairo, pygtk, pygobject, python, pythonDBus, pyxdg }:
+{ stdenv, fetchurl, gconf, gettext, gnome_python, gtk3, intltool, makeWrapper, pycairo, pygtk, pygobject, python, pythonDBus, pyxdg, pythonPackages }:
 
 stdenv.mkDerivation {
   name = "hamster-1.04";
@@ -20,6 +20,17 @@ stdenv.mkDerivation {
       --prefix PYTHONPATH : "$(toPythonPath ${pygtk})/gtk-2.0" \
       --prefix PYTHONPATH : "$(toPythonPath ${pythonDBus})" \
       --prefix PYTHONPATH : "$(toPythonPath ${pyxdg})"
+    wrapProgram $out/lib/hamster-time-tracker/hamster-service \
+      --prefix PYTHONPATH : "$(toPythonPath $out)" \
+      --prefix PYTHONPATH : "$(toPythonPath ${gnome_python})" \
+      --prefix PYTHONPATH : "$(toPythonPath ${pycairo})" \
+      --prefix PYTHONPATH : "$(toPythonPath ${pygobject})" \
+      --prefix PYTHONPATH : "$(toPythonPath ${pygobject})/gtk-2.0" \
+      --prefix PYTHONPATH : "$(toPythonPath ${pygtk})/gtk-2.0" \
+      --prefix PYTHONPATH : "$(toPythonPath ${pythonDBus})" \
+      --prefix PYTHONPATH : "$(toPythonPath ${pythonPackages.pysqlite})" \
+      --prefix PYTHONPATH : "$(toPythonPath ${pyxdg})"
+    rm -rf $out/share/icons
   '';
   buildInputs = [
     gconf gettext gnome_python gtk3 intltool makeWrapper pycairo
